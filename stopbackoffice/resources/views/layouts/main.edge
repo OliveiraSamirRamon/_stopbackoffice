@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>
+  @!section('title')
+  </title>
+  {{ style('style') }}
+  @!section('cssextra')
+</head>
+<body>
+  <header>
+    <a href="#" id='logo'>Stop! BackOffice</a>
+    <nav>
+      <ul>
+        @loggedIn
+        <li><a href="/">Home</a></li>
+        <li><a href="#">Novo tema</a></li>
+        {{-- <li><a href="/signup">novo usuario</a></li> --}}
+        <li><a href="#">Perfil</a></li>
+        <li><a href="/logout">Logout</a></li>
+        @endloggedIn
+      </ul>
+    </nav>
+  </header>
+  <div class="container">
+    @!section('conteudo')
+  </div>
+</body>
+</html>
