@@ -1,41 +1,46 @@
 @layout('layouts.main')
 
 @section('cssextra')
-{{style('css/login')}}
+{{style('css/auth/login')}}
 {{ style('forms') }}
 @endsection
 
 @section('title')
-JobPostr - Login
+Stop! BackOffice - Login
 @endsection
 
 @section('conteudo')
-  <h1>Login now</h1>
 
-  <div class="job-container">
+  <div style='background-color: #eee' >
+    <h1>Login</h1>
+
     @if(flashMessage('loginError'))
         <span>{{ flashMessage('loginError') }}</span>
     @endif
       <form action="{{ route('UserController.login') }}" method="POST">
         {{ csrfField() }}
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" class="form-control" value="{{ old('email', '') }}">
+        </div>
 
-        <label for="email">Email</label>
-        <input type="email" name="email" value="{{ old('email', '') }}">
-        @if(hasErrorFor('email'))
-            <span>
-                {{ getErrorFor('email') }}
-            </span>
-        @endif
-
-        <label for="password">Password</label>
-        <input type="password" name="password">
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" class="form-control" name="password">
+        </div>
         @if(hasErrorFor('password'))
             <span>
                 {{ getErrorFor('password') }}
             </span>
         @endif
-
-        <button type="submit">Login now</button>
+        @if(hasErrorFor('email'))
+            <span>
+                {{ getErrorFor('email') }}
+            </span>
+        @endif
+        <div class="form-group">          
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
       </form>
   </div>
 @endsection

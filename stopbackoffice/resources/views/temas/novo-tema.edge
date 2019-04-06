@@ -1,0 +1,53 @@
+@layout('layouts.main')
+
+@section('cssextra')
+{{style('css/temas/lista-temas')}}
+{{ style('forms') }}
+
+@endsection
+
+@section('title')
+Stop! BackOffice - Novo Tema
+@endsection
+
+@section('conteudo')
+    <h2>Novo tema</h2>
+    <br>
+   <div>
+    <form action="{{ route('TemaController.store') }}" method="post">
+          <div class="form-group">
+            <label for="nome"><strong>Nome:</strong></label>
+            <input class="form-control" name="nome" type="text" class="form-control" value="{{ old('nome', '') }}">
+          </div>
+          <div class="form-group">
+            <label for="descricao"><strong>Descrição:</strong></label>
+            <input class="form-control" name="descricao" type='text' class="form-control" value="{{ old('descricao', '') }}">
+          </div>
+
+          <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Palavra</th>
+                  <th scope="col">Palavra</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Otto</td>
+                  <td>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox">
+                      <label class="form-check-label">
+                      </label>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+          </div>
+      </form>
+    </div>
+
+@endsection

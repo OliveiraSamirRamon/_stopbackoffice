@@ -10,7 +10,7 @@ class LoginUser {
 
   get messages() {
     return {
-      'required': 'Woah now, {{ field }} is required.',
+      'required': 'Preencha todos os campos',
     }
   }
 

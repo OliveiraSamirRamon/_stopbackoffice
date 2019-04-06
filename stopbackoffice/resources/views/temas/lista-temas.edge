@@ -1,0 +1,38 @@
+@layout('layouts.main')
+
+@section('cssextra')
+{{style('css/temas/lista-temas')}}
+{{ style('forms') }}
+
+@endsection
+
+@section('title')
+Stop! BackOffice - Temas
+@endsection
+
+@section('conteudo')
+    <h2>Temas</h2>
+    <br>
+    <div id="accordion">
+      @each(tema in temas)
+      <div class="card">
+        <div class="card-header" id="headingOne">
+          <h5 class="mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              {{tema.nome}}
+            </button>
+          </h5>
+        </div>
+
+        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+          <div class="card-body">
+            @each(palavra in tema.palavras)
+            <li>{{palavra.nome}}</li>
+            @endeach
+          </div>
+        </div>
+      </div>
+      @endeach
+
+
+@endsection

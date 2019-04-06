@@ -1,0 +1,32 @@
+@layout('layouts.main')
+
+@section('cssextra')
+{{style('css/temas/lista-temas')}}
+{{ style('forms') }}
+
+@endsection
+
+@section('title')
+Stop! BackOffice - Palavras
+@endsection
+
+@section('conteudo')
+<h2>Palavras</h2>
+<br>
+<form action="{{ route('PalavraController.store') }}" method="post">
+  <div class="form-group">
+    <label for="nome"><strong>Palavra:</strong> </label>
+    <div class="row">
+      <input type="text" class="form-control" name='nome' style="width: 95%;" autofocus>
+      <button class="btn btn-success ml-2" type="submit" ><i class="fas fa-plus"></i></button>
+    </div>
+  </div>
+</form>
+
+<ul class="list-group">
+    @each(palavra in palavras)
+    <li class="list-group-item">{{palavra.nome}}</li>
+    @endeach
+</ul>
+
+@endsection

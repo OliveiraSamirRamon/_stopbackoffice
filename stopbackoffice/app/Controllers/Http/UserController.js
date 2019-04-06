@@ -27,7 +27,7 @@ class UserController {
     async verifica({auth, response, view}){
         try{
           await auth.check();
-          return view.render('index');
+          return response.redirect('/temas');
         }catch(error){
           return view.render('auth.login');
         }
