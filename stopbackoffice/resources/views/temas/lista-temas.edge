@@ -1,0 +1,48 @@
+@layout('layouts.main')
+
+@section('cssextra')
+{{style('css/temas/lista-temas')}}
+{{ style('forms') }}
+
+@endsection
+
+@section('title')
+Stop! BackOffice - Temas
+@endsection
+
+@section('conteudo')
+    <h2>Temas</h2>
+    <br>
+      @each(tema in temas)
+      <div id="accordion">
+      <div class="card">
+        <div class="card-header" id="{{tema.id}}">
+          <h5 class="mb-0">
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#{{tema.nome}}" aria-expanded="false" >
+                    {{tema.nome}}
+                  </button>
+                  <span>
+                    <a href="{{ route('TemaController.edit', { id: tema.id }) }}"> <button class="btn btn-success"><i class="fas fa-edit"></i></button></a>
+                    <a href="{{ route('TemaController.delete', { id: tema.id }) }}"><button type="button" class="btn btn-danger" data-toggle="modal" ><i class="fas fa-times"></i></button></a>
+                  </span>
+                </li>
+            </ul>
+
+          </h5>
+        </div>
+
+        <div id="{{tema.nome}}" class="collapse" aria-labelledby="{{tema.id}}" data-parent="#accordion" >
+          <div class="card-body">
+            @each(palavra in tema.palavras)
+            <li>{{palavra.nome}}</li>
+            @endeach
+          </div>
+        </div>
+      </div>
+    </div>
+      @endeach
+
+
+@endsection

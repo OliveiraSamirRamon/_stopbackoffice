@@ -1,0 +1,51 @@
+@layout('layouts.main')
+
+@section('cssextra')
+{{ style('forms') }}
+{{style('css/auth/signup')}}
+
+@endsection
+
+@section('title')
+Novo usuario
+@endsection
+
+@section('conteudo')
+  <h1>Join now</h1>
+
+  <div style='background-color: #eee'>
+      <form action="{{ route('UserController.create') }}" method="POST">
+        {{ csrfField() }}
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" name="username" class="form-control" value="{{ old('username', '') }}">
+        </div>
+        @if(hasErrorFor('username'))
+            <span>
+                {{ getErrorFor('username') }}
+            </span>
+        @endif
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" class="form-control" value="{{ old('email', '') }}">
+        </div>
+        @if(hasErrorFor('email'))
+            <span>
+                {{ getErrorFor('email') }}
+            </span>
+        @endif
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" class="form-control" name="password">
+        </div>
+        @if(hasErrorFor('password'))
+            <span>
+                {{ getErrorFor('password') }}
+            </span>
+        @endif
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Inscrever</button>
+        </div>
+      </form>
+  </div>
+@endsection

@@ -1,0 +1,46 @@
+@layout('layouts.main')
+
+@section('cssextra')
+{{style('css/auth/login')}}
+{{ style('forms') }}
+@endsection
+
+@section('title')
+Stop! BackOffice - Login
+@endsection
+
+@section('conteudo')
+
+  <div style='background-color: #eee' >
+    <h1>Login</h1>
+
+    @if(flashMessage('loginError'))
+        <span>{{ flashMessage('loginError') }}</span>
+    @endif
+      <form action="{{ route('UserController.login') }}" method="POST">
+        {{ csrfField() }}
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" name="email" class="form-control" value="{{ old('email', '') }}">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Senha</label>
+          <input type="password" class="form-control" name="password">
+        </div>
+        @if(hasErrorFor('password'))
+            <span>
+                {{ getErrorFor('password') }}
+            </span>
+        @endif
+        @if(hasErrorFor('email'))
+            <span>
+                {{ getErrorFor('email') }}
+            </span>
+        @endif
+        <div class="form-group">          
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+  </div>
+@endsection
