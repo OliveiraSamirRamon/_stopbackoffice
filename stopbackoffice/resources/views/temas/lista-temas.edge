@@ -13,18 +13,27 @@ Stop! BackOffice - Temas
 @section('conteudo')
     <h2>Temas</h2>
     <br>
-    <div id="accordion">
       @each(tema in temas)
+      <div id="accordion">
       <div class="card">
-        <div class="card-header" id="headingOne">
+        <div class="card-header" id="{{tema.id}}">
           <h5 class="mb-0">
-            <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-              {{tema.nome}}
-            </button>
+            <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <button class="btn btn-link" data-toggle="collapse" data-target="#{{tema.nome}}" aria-expanded="false" >
+                    {{tema.nome}}
+                  </button>
+                  <span>
+                    <a href="{{ route('TemaController.edit', { id: tema.id }) }}"> <button class="btn btn-success"><i class="fas fa-edit"></i></button></a>
+                    <a href="{{ route('TemaController.delete', { id: tema.id }) }}"><button type="button" class="btn btn-danger" data-toggle="modal" ><i class="fas fa-times"></i></button></a>
+                  </span>
+                </li>
+            </ul>
+
           </h5>
         </div>
 
-        <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+        <div id="{{tema.nome}}" class="collapse" aria-labelledby="{{tema.id}}" data-parent="#accordion" >
           <div class="card-body">
             @each(palavra in tema.palavras)
             <li>{{palavra.nome}}</li>
@@ -32,6 +41,7 @@ Stop! BackOffice - Temas
           </div>
         </div>
       </div>
+    </div>
       @endeach
 
 

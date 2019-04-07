@@ -17,6 +17,7 @@ Stop! BackOffice - Palavras
   <div class="form-group">
     <label for="nome"><strong>Palavra:</strong> </label>
     <div class="row">
+
       <input type="text" class="form-control" name='nome' style="width: 95%;" autofocus>
       <button class="btn btn-success ml-2" type="submit" ><i class="fas fa-plus"></i></button>
     </div>
@@ -25,8 +26,52 @@ Stop! BackOffice - Palavras
 
 <ul class="list-group">
     @each(palavra in palavras)
-    <li class="list-group-item">{{palavra.nome}}</li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+      {{palavra.nome}}
+      <span>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-id="{{palavra.id}}" data-palavra="{{palavra.nome}}"><i class="fas fa-edit"></i></button>
+        <a href="{{ route('PalavraController.delete', { id: palavra.id }) }}"><button type="button" class="btn btn-danger" data-toggle="modal" ><i class="fas fa-times"></i></button></a>
+      </span>
+    </li>
     @endeach
 </ul>
 
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Editar palavra</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form action="{{ route('PalavraController.update')}}"  method="post">
+          <div class="form-group">
+            <label for="recipient-name" class="control-label">Palavra:</label>
+            <input type="text" class="form-control" name='nome' id="recipient-name">
+            <input type="hidden" class="form-control" name='id' id="id">
+          </div>
+          <button type="submit" class="btn btn-primary" >Salvar</button>
+          <button type="button" data-dismiss="modal" class="btn btn-default" >Fechar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+$('#exampleModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var recipient = button.data('palavra')
+  var id = button.data('id') // Extract info from data-* attributes
+   // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-body #recipient-name').val(recipient)
+  modal.find('.modal-body #id').val(id)
+})
+</script>
 @endsection

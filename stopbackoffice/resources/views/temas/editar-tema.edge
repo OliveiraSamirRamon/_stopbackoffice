@@ -7,26 +7,24 @@
 @endsection
 
 @section('title')
-Stop! BackOffice - Novo Tema
+Stop! BackOffice - Editar Tema
 @endsection
 
 @section('conteudo')
-
-   <h2>Novo tema</h2>
+    <h2>Editar Tema</h2>
     <br>
    <div>
-     <div class="float-right">
-       <a href="/palavras"><button class="btn btn-success mb-3">Adicionar palavras</button></a>
-     </div>
-
-    <form action="{{ route('TemaController.store') }}" method="post">
+   <div class="float-right">
+      <a href="/palavras"><button class="btn btn-success mb-3">Adicionar palavras</button></a>
+    </div>
+    <form action="{{ route('TemaController.update',{id: tema.id}) }}" method="post">
           <div class="form-group">
             <label for="nome"><strong>Nome:</strong></label>
-            <input class="form-control" name="nome" type="text" class="form-control" value="{{ old('nome', '') }}">
+            <input class="form-control" name="nome" type="text" class="form-control" value="{{tema.nome}}">
           </div>
           <div class="form-group">
             <label for="descricao"><strong>Descrição:</strong></label>
-            <input class="form-control" name="descricao" type='text' class="form-control" value="{{ old('descricao', '') }}">
+            <input class="form-control" name="descricao" type='text' class="form-control" value="{{tema.descricao}}">
           </div>
 
           <table class="table">
@@ -54,6 +52,5 @@ Stop! BackOffice - Novo Tema
           </div>
       </form>
     </div>
-
 
 @endsection

@@ -17,7 +17,40 @@ class TemaController {
       await tema.palavras().attach(palavras)
       await tema.load('palavras')
     }
+    return response.redirect('/temas')
   }
+
+  async update({params,request, response}){
+    const tema = await Tema.findOrFail(params.id)
+
+    const {palavras, ...data } = request.only(['nome','descricao','palavras'])
+
+    tema.merge(data)
+
+    await tema.save()
+      await tema.palavras().sync(palavras)
+      await tema.load('palavras')
+    return response.redirect('/temas')
+  }
+
+  async carregarPalavras({view}){
+    const palavras = await Palavra.all()
+    return view.render('temas.novo-tema', { palavras: palavras.toJSON() })
+  }
+
+  async edit({params, response, view}){
+    const tema = await Tema.findOrFail(params.id)
+    const palavras = await Palavra.all()
+    return view.render('temas.editar-tema', {tema: tema, palavras: palavras.toJSON()})
+  }
+
+
+  async delete({ response, session, params}){
+    const tema = await Tema.find(params.id)
+    await tema.delete()
+    return response.redirect('/temas')
+  }
+
 
 }
 module.exports = TemaController

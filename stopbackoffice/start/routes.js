@@ -28,10 +28,16 @@ Route.get('/logout', async ({ auth, response }) => {
 Route.get('/','UserController.verifica');
 Route.post('/', 'UserController.login').validator('LoginUser');
 
-
-Route.get('/temas','TemaController.home')
-Route.on('/novoTema').render('temas.novo-tema').middleware('auth');
-
-Route.get('/palavras','PalavraController.home').middleware('auth');
-Route.post('/palavras', 'PalavraController.store');
 Route.post('/temas', 'TemaController.store');
+Route.post('/temas/:id','TemaController.update');
+Route.get('/temas','TemaController.home');
+Route.get('/novoTema','TemaController.carregarPalavras');
+Route.get('/tema/edit/:id', 'TemaController.edit');
+Route.get('/tema/delete/:id','TemaController.delete')
+
+
+Route.get('/palavras','PalavraController.home')
+Route.post('/palavra', 'PalavraController.update');
+Route.post('/palavras', 'PalavraController.store');
+Route.get('/palavra/edit/:id', 'PalavraController.edit');
+Route.get('/palavra/delete/:id','PalavraController.delete');
