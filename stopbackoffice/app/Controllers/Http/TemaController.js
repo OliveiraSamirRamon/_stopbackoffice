@@ -11,18 +11,22 @@ class TemaController {
 
   async store({request, response}){
     const {palavras, ...data} = request.only(['nome','descricao','palavras'])
+    const exist = await Tema.findBy('nome', data.nome)
 
-    const tema = await Tema.create(data)
-    if(palavras && palavras.length > 0){
-      await tema.palavras().attach(palavras)
-      await tema.load('palavras')
+    if(!exist){
+      const tema = await Tema.create(data)
+      if(palavras && palavras.length > 0){
+        await tema.palavras().attach(palavras)
+        await tema.load('palavras')
+      }
+      return response.redirect('/temas')
+    }else {
+      session.flash({ message: 'Tema já existe' });
     }
-    return response.redirect('/temas')
   }
 
   async update({params,request, response}){
     const tema = await Tema.findOrFail(params.id)
-
     const {palavras, ...data } = request.only(['nome','descricao','palavras'])
 
     tema.merge(data)

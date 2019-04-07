@@ -20,6 +20,12 @@ Stop! BackOffice - Palavras
 
       <input type="text" class="form-control" name='nome' style="width: 95%;" autofocus>
       <button class="btn btn-success ml-2" type="submit" ><i class="fas fa-plus"></i></button>
+      <span>{{ flashMessage('message') }}</span>
+      @if(hasErrorFor('nome'))
+      <span>
+        <strong style='color: red;'>{{ getErrorFor('nome') }}</strong>
+      </span>
+      @endif
     </div>
   </div>
 </form>
@@ -67,7 +73,7 @@ Stop! BackOffice - Palavras
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5>Editar palavra</h5>
+        <h5>Excluir palavra</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">

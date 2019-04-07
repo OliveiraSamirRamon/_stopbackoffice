@@ -9,13 +9,15 @@ class PalavraController {
     return view.render('palavras.lista-palavras', { palavras: palavras.toJSON() })
   }
 
-  async store({request, response}){
+  async store({request, response, session}){
     const data = request.only(['nome'])
     const palavra = await Palavra.findBy('nome', data.nome);
 
     if(!palavra){
       const palavra = await Palavra.create(data)
       return response.redirect('back')
+    }else{
+      session.flash({ message: 'Palavra já existe' });
     }
   }
 
@@ -24,13 +26,14 @@ class PalavraController {
     return palavra
   }
 
-  async update ({ response, request }) {
+  async update ({ response, request, session }) {
       const data = request.only(['id','nome']);
       const palavra = await Palavra.find(data.id);
-
-      palavra.nome = request.all().nome;
-      await palavra.save();
-      return response.redirect('/palavras')
+      if(data.nome){
+          palavra.nome = request.all().nome;
+          await palavra.save();
+          return response.redirect('/palavras')
+      }
   }
 
   async delete({request, response}){
