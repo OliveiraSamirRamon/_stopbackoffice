@@ -30,26 +30,26 @@ Stop! BackOffice - Palavras
       {{palavra.nome}}
       <span>
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal" data-id="{{palavra.id}}" data-palavra="{{palavra.nome}}"><i class="fas fa-edit"></i></button>
-        <a href="{{ route('PalavraController.delete', { id: palavra.id }) }}"><button type="button" class="btn btn-danger" data-toggle="modal" ><i class="fas fa-times"></i></button></a>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modalDelete" data-id="{{palavra.id}}" data-palavra="{{palavra.nome}}"><i class="fas fa-times"></i></button>
       </span>
     </li>
     @endeach
 </ul>
 
 
-
+{{-- Modal editar --}}
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5>Editar palavra</h5>
+        <h5>Atenção</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
         <form action="{{ route('PalavraController.update')}}"  method="post">
           <div class="form-group">
             <label for="recipient-name" class="control-label">Palavra:</label>
-            <input type="text" class="form-control" name='nome' id="recipient-name">
+            <input type="text" class="form-control" name='nome' id="recipient-name" >
             <input type="hidden" class="form-control" name='id' id="id">
           </div>
           <button type="submit" class="btn btn-primary" >Salvar</button>
@@ -61,8 +61,51 @@ Stop! BackOffice - Palavras
 </div>
 
 
+
+{{-- Modal deletar --}}
+<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5>Editar palavra</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        Tem certeza que deseja excluir essa palavra?:
+        <br>
+        <form action="{{ route('PalavraController.delete')}}"  method="post">
+          <div class="form-group">
+            <input type="text" class="form-control" name='nome' id="recipient-name" readonly>
+            <input type="hidden" class="form-control" name='id' id="id">
+            <br>
+            Exclui-la significa que todas os temas que a usam perderam uma palavra
+          </div>
+          <button type="submit" class="btn btn-primary" >Sim</button>
+          <button type="button" data-dismiss="modal" class="btn btn-default" >Não</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <script>
 $('#exampleModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var recipient = button.data('palavra')
+  var id = button.data('id') // Extract info from data-* attributes
+   // Extract info from data-* attributes
+  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
+  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
+  var modal = $(this)
+  modal.find('.modal-body #recipient-name').val(recipient)
+  modal.find('.modal-body #id').val(id)
+})
+</script>
+
+<script>
+$('#modalDelete').on('show.bs.modal', function (event) {
   var button = $(event.relatedTarget) // Button that triggered the modal
   var recipient = button.data('palavra')
   var id = button.data('id') // Extract info from data-* attributes

@@ -11,9 +11,12 @@ class PalavraController {
 
   async store({request, response}){
     const data = request.only(['nome'])
+    const palavra = await Palavra.findBy('nome', data.nome);
 
-    const palavra = await Palavra.create(data)
-    return response.redirect('back')
+    if(!palavra){
+      const palavra = await Palavra.create(data)
+      return response.redirect('back')
+    }
   }
 
   async edit({ params, response }){
@@ -30,8 +33,9 @@ class PalavraController {
       return response.redirect('/palavras')
   }
 
-  async delete({ response, session, params}){
-    const palavra = await Palavra.find(params.id)
+  async delete({request, response}){
+    const data = request.only(['nome','id'])
+    const palavra = await Palavra.find(data.id)
     await palavra.delete()
     return response.redirect('/palavras')
   }

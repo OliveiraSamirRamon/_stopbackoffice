@@ -40,4 +40,4 @@ Route.get('/palavras','PalavraController.home')
 Route.post('/palavra', 'PalavraController.update');
 Route.post('/palavras', 'PalavraController.store');
 Route.get('/palavra/edit/:id', 'PalavraController.edit');
-Route.get('/palavra/delete/:id','PalavraController.delete');
+Route.post('/palavra/delete','PalavraController.delete');
